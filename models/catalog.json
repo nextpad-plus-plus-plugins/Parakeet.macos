@@ -1,5 +1,5 @@
 {
-  "catalog_version": 9,
+  "catalog_version": 10,
   "comment": "Parakeet model catalog. Distribution (decided 2026-07-13): the plugin SHIPS with the standard transcription model (Whisper Small Q5) + silero VAD bundled; the standard summarizer (Qwen3.5 2B) auto-downloads on first run (1.3 GB is too heavy for the Plugins Admin zip). All other models are in-panel downloads. This file is the SHIPPED baseline index; the plugin periodically fetches the LIVE index (index_url below, nppPluginList-style) from the Parakeet plugin repo so new models appear without a plugin update — remote entries merge over these by id, shipped file wins on parse failure. Hosting: transcription/VAD/speaker + the two Qwen default summarizers are on our own GitHub models-repo releases (our pinned sha256s); the ADDITIONAL local summarizers (Gemma/Granite/Llama, added catalog_version 6, 2026-07-14) stream directly from their upstream Hugging Face GGUF repos (per-model `repo` + `license` fields) with pinned sha256 — we don't re-host every model. Every download is sha256-verified regardless of host; the NSURLSession downloader follows HF's 302 redirects transparently. Models install to <plugins-config>/Parakeet/models/. (catalog_version 6: removed minicpm5-1b — it declares arch=llama but needs MiniCPM depth-scaling our vendored llama.cpp doesn't apply, so it produced token garbage; replaced with four HF-hosted models verified to generate coherent summaries through our engine.) (catalog_version 7, 2026-07-15: added kind=\"translation\" — a dedicated NMT model, MADLAD-400-3B (Google, T5, Apache-2.0, 419 langs, auto-detects source), plus the strongly-multilingual summarizer GGUFs dual-listed as translators (same file, shared download) so Translate works out-of-the-box on the auto-fetched Qwen 2B. The engine runs decoder-only LLM translators via a chat prompt and T5/NMT models via llama.cpp's encoder-decoder path — it picks by inspecting the model. NLLB-200 (M2M) and Opus-MT (Marian) are NOT listed: our vendored llama.cpp can't load those architectures — they need a separate ONNX/CTranslate2 runtime, a future addition.)",
   "models_repo": "https://github.com/nextpad-plus-plus-plugins/Parakeet.macos",
   "index_url": "https://raw.githubusercontent.com/nextpad-plus-plus-plugins/Parakeet.macos/main/models/catalog.json",
@@ -40,6 +40,18 @@
       "size_mb": 56,
       "languages": "100 languages",
       "notes": "Lightweight option — faster and smaller than Small; weaker outside English."
+    },
+    {
+      "id": "whisper-tiny-q5",
+      "kind": "asr",
+      "name": "Whisper Tiny (Q5)",
+      "file": "ggml-tiny-q5_1.bin",
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny-q5_1.bin",
+      "repo": "https://huggingface.co/ggerganov/whisper.cpp",
+      "sha256": "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7",
+      "size_mb": 31,
+      "languages": "99 languages",
+      "notes": "Fastest and smallest transcription model — best on older/Intel Macs where larger models run below real-time. Lower accuracy, weakest outside English."
     },
     {
       "id": "whisper-small",
