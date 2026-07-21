@@ -1,10 +1,3 @@
----
-title: "Parakeet AI Plugin for Voice and Meeting Transcription, Summarization and Translation"
-date: 2026-07-20
-description: Parakeet — a private, on-device voice plugin for Nextpad++. Live transcription, meeting capture, AI summaries, and translation across 200 languages. Your private Granola notepad on device.
-tags: [nextpad++, transcription, whisper, translation, meetings, AI]
----
-
 ![parakeet-hero](npp_parakeet_v1.0.0/parakeet_logo.png) *Parakeet v1.0.0 — your voice, straight into the editor*
 
 # Parakeet AI Plugin v1.0.0
